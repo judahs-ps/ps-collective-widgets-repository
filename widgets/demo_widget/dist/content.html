@@ -1,1 +1,55 @@
-<h1>Payscale Collective POC widget</h1>
+<script>
+  (() => {
+    fetch('/widget-service/connectors/random-dog-photo-connector/execute')
+      .then(response => response.json())
+      .then(data => {
+        const photo = Array.isArray(data) ? data[0] : data;
+        if (!photo?.urls) return;
+
+        const unsplashContainer = document.querySelector('#unsplash');
+        const image = document.createElement('img');
+        image.src = photo.urls.regular;
+        image.alt = photo.alt_description || 'doggo';
+        unsplashContainer.replaceChildren(image);
+      })
+      .catch(err => console.error(err));
+  })(); 
+</script>
+
+<style>
+  #unsplash img {
+    display: block;
+    max-width: 500px;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .container {
+    padding: 0 50px;
+    background-color: lightskyblue;
+  }
+
+  .container h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 36px;
+    color: #0a4444;
+    margin-bottom: 20px;
+  }
+
+  .container p {
+    font-size: 18px;
+    color: #000;
+    margin: 10px 0 40px 0;
+  }
+
+  .container figure img {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }  
+</style>
+
+<div class="container">
+  <h1>Payscale Collective Proof of Concept widget</h1>
+  <p>This is a proof of concept widget for Payscale Collective.</p>
+  <figure id="unsplash"></figure>
+</div>
