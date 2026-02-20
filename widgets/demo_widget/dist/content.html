@@ -1,16 +1,14 @@
 <script>
   (async () => {
     const sdk = new window.WidgetServiceSDK();
-
-    const result = await sdk.connectors.execute({
+    const data = await sdk.connectors.execute({
       permalink: "random-dog-photo-connector",
       method: "GET",
       queryParams: {
         q: "dog"
       }
     });
-
-    console.log(result);
+    console.log(data);
   })();
 </script>
 
