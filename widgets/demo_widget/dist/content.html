@@ -1,19 +1,15 @@
+<script src="https://static.customer-hub.northpass.com/widget-sdk/latest/index.umd.js"></script>
 <script>
-  (() => {
-    fetch('/widget-service/connectors/random-dog-photo-connector/execute')
-      .then(response => response.json())
-      .then(data => {
-        const photo = Array.isArray(data) ? data[0] : data;
-        if (!photo?.urls) return;
+  (async () => {
+    const sdk = new window.WidgetServiceSDK();
 
-        const unsplashContainer = document.querySelector('#unsplash');
-        const image = document.createElement('img');
-        image.src = photo.urls.regular;
-        image.alt = photo.alt_description || 'doggo';
-        unsplashContainer.replaceChildren(image);
-      })
-      .catch(err => console.error(err));
-  })(); 
+    const result = await sdk.connectors.execute({
+      permalink: "random-dog-photo-connector",
+      method: "GET"
+    });
+
+    console.log(result);
+  })();
 </script>
 
 <style>
