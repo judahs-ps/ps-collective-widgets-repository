@@ -1,4 +1,21 @@
+<script>
+  (async () => {
+    const sdk = new window.WidgetServiceSDK();
+
+    const result = await sdk.connectors.execute({
+      permalink: "random-dog-photo-connector",
+      method: "GET",
+      queryParams: {
+        q: "dog"
+      }
+    });
+
+    console.log(result);
+  })();
+</script>
+
 <div class="container">
   <h1>Payscale Collective Proof of Concept widget</h1>
   <p>This is a proof of concept widget for Payscale Collective.</p>
+  <figure><img src="" alt=""></figure>
 </div>
