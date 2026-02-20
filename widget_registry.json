@@ -3,7 +3,7 @@
     {
       "version": "1.0.0",
       "title": "My First Widget",
-      "type": "my_company_first_widget",
+      "type": "col-poc-widget",
       "description": "A simple hello world widget",
       "category": "custom",
       "containers": ["Full width"],
@@ -16,8 +16,8 @@
         "movable": true
       },
       "source": {
-        "path": "widgets/demo_widget",
-        "entry": "index.html"
+        "path": "widgets/demo_widget/dist",
+        "entry": "content.html"
       }
     }
   ]
