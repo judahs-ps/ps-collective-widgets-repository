@@ -1,17 +1,3 @@
-<script src="https://static.customer-hub.northpass.com/widget-sdk/latest/index.umd.js"></script>
-<script>
-  (async () => {
-    const sdk = new window.WidgetServiceSDK();
-
-    const result = await sdk.connectors.execute({
-      permalink: "random-dog-photo-connector",
-      method: "GET"
-    });
-
-    console.log(result);
-  })();
-</script>
-
 <style>
   #unsplash img {
     display: block;
