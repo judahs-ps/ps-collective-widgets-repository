@@ -19,6 +19,28 @@
         "path": "widgets/demo_widget/dist",
         "entry": "content.html"
       }
+    },
+    {
+      "version": "1.0.0",
+      "title": "Proof of Concept Widget",
+      "type": "col-ps-poc-widget",
+      "description": "A simple widget built completely from scratch",
+      "category": "custom",
+      "containers": [
+        "Full width"
+      ],
+      "widgetsLibrary": true,
+      "settings": {
+        "configurable": true,
+        "editable": true,
+        "removable": true,
+        "shared": false,
+        "movable": true
+      },
+      "source": {
+        "path": "widgets/poc_widget/",
+        "entry": "index.html"
+      }
     }
   ]
 }
