@@ -1,16 +1,11 @@
-<script>
-  (async () => {
-    const sdk = new window.WidgetServiceSDK();
-    const data = await sdk.connectors.execute({
-      permalink: "random-dog-photo-connector",
-      method: "GET",
-      queryParams: {
-        q: "dog"
-      }
-    });
-    console.log(data);
-  })();
-</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+<style>
+  .container {
+    font-family: 'Roboto', sans-serif;
+    color: blue;
+    padding: 20px;
+  }
+</style>
 
 <div class="container">
   <h1>Payscale Collective Proof of Concept widget</h1>
