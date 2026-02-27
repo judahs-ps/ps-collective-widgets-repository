@@ -41,6 +41,28 @@
         "path": "widgets/poc_widget/",
         "entry": "index.html"
       }
+    },
+    {
+      "version": "1.0.0",
+      "title": "Survey Participation Data Table",
+      "type": "col-ps-data-table-widget",
+      "description": "Data table containing survey participation data.",
+      "category": "custom",
+      "containers": [
+        "Full width"
+      ],
+      "widgetsLibrary": true,
+      "settings": {
+        "configurable": true,
+        "editable": true,
+        "removable": true,
+        "shared": false,
+        "movable": true
+      },
+      "source": {
+        "path": "widgets/survey_part_datatable/",
+        "entry": "index.html"
+      }
     }
   ]
 }
