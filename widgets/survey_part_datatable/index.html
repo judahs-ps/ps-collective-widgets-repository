@@ -11,14 +11,14 @@
 
 <h1>Searchable, Sortable Data Table</h1>
 
-<table id="excelTable" class="display" style="width:100%">
+<table id="surveyDataTable" class="display" style="width:100%">
   <thead id="tableHead"></thead>
   <tbody id="tableBody"></tbody>
 </table>
 
 <script>
   // Load JSON and initialize DataTable
-  fetch("survey-part-table.json")
+  fetch("https://connect.payscale.com/s/survey-part-table.json")
     .then(response => response.json())
     .then(data => {
       if (!data.length) return;
@@ -45,6 +45,6 @@
         .join("");
 
       // Initialize DataTables
-      $("#excelTable").DataTable();
+      $("#surveyDataTable").DataTable();
     });
 </script>
