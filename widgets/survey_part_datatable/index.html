@@ -18,13 +18,15 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const data = surveyPartData || [];
+    // Confirm the data exists and is an array
+    const data = window.surveyPartData;
 
-    if (!data.length) {
-      console.warn("No data found");
+    if (!Array.isArray(data) || data.length === 0) {
+      console.warn("surveyPartData is empty or not an array");
       return;
     }
 
+    // Build table headers dynamically
     const headers = Object.keys(data[0]);
     const thead = document.getElementById("tableHead");
     thead.innerHTML = `
@@ -33,6 +35,7 @@
       </tr>
     `;
 
+    // Build table rows
     const tbody = document.getElementById("tableBody");
     tbody.innerHTML = data
       .map(row => `
@@ -42,6 +45,7 @@
       `)
       .join("");
 
+    // Initialize DataTables AFTER table is built
     $("#surveyDataTable").DataTable();
   });
 </script>
