@@ -6,7 +6,8 @@
 
 <script>
   (function () {
-    // Poll until Gainsight's jQuery is available
+
+    // Wait until Gainsight's jQuery is available
     function waitForjQuery(callback) {
       if (window.jQuery && typeof window.jQuery === "function") {
         callback(window.jQuery);
@@ -46,5 +47,6 @@
           console.error("Failed to load DataTables");
         });
     });
+
   })();
 </script>
