@@ -67,7 +67,7 @@
     {
       "version": "1.0.0",
       "title": "Survey Participation Resources Data Table",
-      "type": "col-ps-data-table-widget",
+      "type": "col-ps-survey-participation-resources-widget",
       "description": "Data table containing survey participation resources data.",
       "category": "custom",
       "containers": [
