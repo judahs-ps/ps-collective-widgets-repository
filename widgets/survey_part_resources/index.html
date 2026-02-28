@@ -4,7 +4,17 @@
 <script>
   (function () {
 
-    // Wait until Gainsight's jQuery is available
+    // Load DataTables CSS
+    function loadCSS(url) {
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = url;
+      document.head.appendChild(link);
+    }
+
+    loadCSS("https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css");
+
+    // Wait for Gainsight jQuery
     function waitForjQuery(callback) {
       if (window.jQuery && typeof window.jQuery === "function") {
         callback(window.jQuery);
@@ -16,11 +26,15 @@
     waitForjQuery(function ($) {
       console.log("Gainsight jQuery loaded:", $.fn.jquery);
 
-      // Load DataTables AFTER jQuery is ready
-      $.getScript("https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js")
-        .done(function () {
-          console.log("DataTables loaded");
+      // Load DataTables and bind it to Gainsight's jQuery
+      $.ajax({
+        url: "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js",
+        dataType: "script",
+        cache: true,
+        success: function () {
+          console.log("DataTables loaded and bound to Gainsight jQuery");
 
+          // Now DataTables is guaranteed to be attached to THIS jQuery instance
           const tableData = [
             { id: 1, name: "Alice Johnson", role: "Admin", active: true },
             { id: 2, name: "Bob Smith", role: "Moderator", active: false },
@@ -33,16 +47,15 @@
             data: key
           }));
 
+          // Initialize DataTable
           $("#jsonTable").DataTable({
             data: tableData,
             columns: columns,
             pageLength: 5,
             searching: true
           });
-        })
-        .fail(function () {
-          console.error("Failed to load DataTables");
-        });
+        }
+      });
     });
 
   })();
