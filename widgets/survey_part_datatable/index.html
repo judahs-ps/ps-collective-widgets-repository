@@ -17,33 +17,31 @@
 </table>
 
 <script>
-  (function () {
-    const data = surveyPartData || [];
+  document.addEventListener("DOMContentLoaded", function () {
+    const data = window.surveyPartData || [];
+
     if (!data.length) {
       console.warn("No data found");
       return;
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const headers = Object.keys(data[0]);
-      const thead = document.getElementById("tableHead");
-      thead.innerHTML = `
-        <tr>
-          ${headers.map(h => `<th>${h}</th>`).join("")}
-        </tr>
-      `;
+    const headers = Object.keys(data[0]);
+    const thead = document.getElementById("tableHead");
+    thead.innerHTML = `
+      <tr>
+        ${headers.map(h => `<th>${h}</th>`).join("")}
+      </tr>
+    `;
 
-      const tbody = document.getElementById("tableBody");
-      tbody.innerHTML = data
-        .map(row => `
-          <tr>
-            ${headers.map(h => `<td>${row[h]}</td>`).join("")}
-          </tr>
-        `)
-        .join("");
-      }
-    );
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = data
+      .map(row => `
+        <tr>
+          ${headers.map(h => `<td>${row[h]}</td>`).join("")}
+        </tr>
+      `)
+      .join("");
+
     $("#surveyDataTable").DataTable();
-  })();
+  });
 </script>
-  
