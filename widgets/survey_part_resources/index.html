@@ -6,21 +6,23 @@
 
 <script>
   (function () {
-    // Wait until Gainsight's jQuery is available
+    // Poll until Gainsight's jQuery is available
     function waitForjQuery(callback) {
       if (window.jQuery && typeof window.jQuery === "function") {
         callback(window.jQuery);
       } else {
-        setTimeout(() => waitForjQuery(callback), 50);
+        setTimeout(() => waitForjQuery(callback), 100);
       }
     }
 
     waitForjQuery(function ($) {
-      // Now jQuery is guaranteed to exist
+      console.log("Gainsight jQuery loaded:", $.fn.jquery);
 
       // Load DataTables AFTER jQuery is ready
       $.getScript("https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js")
         .done(function () {
+          console.log("DataTables loaded");
+
           const tableData = [
             { id: 1, name: "Alice Johnson", role: "Admin", active: true },
             { id: 2, name: "Bob Smith", role: "Moderator", active: false },
@@ -45,4 +47,4 @@
         });
     });
   })();
-</script>  
+</script>
