@@ -2,61 +2,46 @@
 
 <table id="jsonTable" class="display"></table>
 <script>
-  (function () {
+  document.addEventListener("insided-ready", function () {
 
     // Load DataTables CSS
-    function loadCSS(url) {
-      var link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = url;
-      document.head.appendChild(link);
-    }
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css";
+    document.head.appendChild(link);
 
-    loadCSS("https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css");
+    // Gainsight jQuery is now guaranteed to exist
+    var $ = window.jQuery;
+    console.log("Gainsight jQuery loaded:", $.fn.jquery);
 
-    // Wait for Gainsight jQuery
-    function waitForjQuery(callback) {
-      if (window.jQuery && typeof window.jQuery === "function") {
-        callback(window.jQuery);
-      } else {
-        setTimeout(() => waitForjQuery(callback), 100);
+    // Load DataTables and bind it to Gainsight jQuery
+    $.ajax({
+      url: "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js",
+      dataType: "script",
+      cache: true,
+      success: function () {
+        console.log("DataTables loaded");
+
+        const tableData = [
+          { id: 1, name: "Alice Johnson", role: "Admin", active: true },
+          { id: 2, name: "Bob Smith", role: "Moderator", active: false },
+          { id: 3, name: "Charlie Davis", role: "Member", active: true },
+          { id: 4, name: "Dana Lee", role: "Member", active: true }
+        ];
+
+        const columns = Object.keys(tableData[0]).map(key => ({
+          title: key.charAt(0).toUpperCase() + key.slice(1),
+          data: key
+        }));
+
+        $("#jsonTable").DataTable({
+          data: tableData,
+          columns: columns,
+          pageLength: 5,
+          searching: true
+        });
       }
-    }
-
-    waitForjQuery(function ($) {
-      console.log("Gainsight jQuery loaded:", $.fn.jquery);
-
-      // Load DataTables and bind it to Gainsight's jQuery
-      $.ajax({
-        url: "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js",
-        dataType: "script",
-        cache: true,
-        success: function () {
-          console.log("DataTables loaded and bound to Gainsight jQuery");
-
-          // Now DataTables is guaranteed to be attached to THIS jQuery instance
-          const tableData = [
-            { id: 1, name: "Alice Johnson", role: "Admin", active: true },
-            { id: 2, name: "Bob Smith", role: "Moderator", active: false },
-            { id: 3, name: "Charlie Davis", role: "Member", active: true },
-            { id: 4, name: "Dana Lee", role: "Member", active: true }
-          ];
-
-          const columns = Object.keys(tableData[0]).map(key => ({
-            title: key.charAt(0).toUpperCase() + key.slice(1),
-            data: key
-          }));
-
-          // Initialize DataTable
-          $("#jsonTable").DataTable({
-            data: tableData,
-            columns: columns,
-            pageLength: 5,
-            searching: true
-          });
-        }
-      });
     });
 
-  })();
+  });
 </script>
