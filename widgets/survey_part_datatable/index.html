@@ -17,16 +17,12 @@
 </table>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Confirm the data exists and is an array
-    const data = window.surveyPartData;
-
+  window.loadSurveyPartData = function (data) {
     if (!Array.isArray(data) || data.length === 0) {
-      console.warn("surveyPartData is empty or not an array");
+      console.warn("No survey data received");
       return;
     }
 
-    // Build table headers dynamically
     const headers = Object.keys(data[0]);
     const thead = document.getElementById("tableHead");
     thead.innerHTML = `
@@ -35,7 +31,6 @@
       </tr>
     `;
 
-    // Build table rows
     const tbody = document.getElementById("tableBody");
     tbody.innerHTML = data
       .map(row => `
@@ -45,7 +40,9 @@
       `)
       .join("");
 
-    // Initialize DataTables AFTER table is built
     $("#surveyDataTable").DataTable();
-  });
+  };
 </script>
+
+<!-- Load the JSONP file AFTER defining the callback -->
+<script src="https://connect.payscale.com/s/survey-part-data.js"></script>
