@@ -20,30 +20,31 @@
 </table>
 
 <script>
-  const data = surveyPartData || { };
-  if (!data.length) return;
+  (function () {
+    const data = surveyPartData || [];
+    if (!data.length) {
+      console.warn("No data found");
+      return;
+    }
 
-  // Build table headers dynamically
-  const headers = Object.keys(data[0]);
-  const thead = document.getElementById("tableHead");
-  thead.innerHTML = `
-    <tr>
-      ${headers.map(h => `<th>${h}</th>`).join("")}
-    </tr>
-  `;
+    const headers = Object.keys(data[0]);
+    const thead = document.getElementById("tableHead");
+    thead.innerHTML = `
+      <tr>
+        ${headers.map(h => `<th>${h}</th>`).join("")}
+      </tr>
+    `;
 
-  // Build table rows
-  const tbody = document.getElementById("tableBody");
-  tbody.innerHTML = data
-    .map(row => {
-      return `
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = data
+      .map(row => `
         <tr>
           ${headers.map(h => `<td>${row[h]}</td>`).join("")}
         </tr>
-      `;
-    })
-    .join("");
+      `)
+      .join("");
 
-  // Initialize DataTables
-  $("#surveyDataTable").DataTable();
+    $("#surveyDataTable").DataTable();
+  })();
 </script>
+  
