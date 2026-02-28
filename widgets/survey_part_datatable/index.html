@@ -17,32 +17,52 @@
 </table>
 
 <script>
-  window.loadSurveyPartData = function (data) {
-    if (!Array.isArray(data) || data.length === 0) {
-      console.warn("No survey data received");
-      return;
-    }
+  // Gainsight passes widgetContext into your script
+  insided.initWidget(async function (widgetContext) {
 
-    const headers = Object.keys(data[0]);
-    const thead = document.getElementById("tableHead");
-    thead.innerHTML = `
-      <tr>
-        ${headers.map(h => `<th>${h}</th>`).join("")}
-      </tr>
-    `;
+    // JSONP callback
+    window.loadSurveyPartData = function (data) {
+      if (!Array.isArray(data) || data.length === 0) {
+        console.warn("No survey data received");
+        return;
+      }
 
-    const tbody = document.getElementById("tableBody");
-    tbody.innerHTML = data
-      .map(row => `
+      // Use the widget's DOM, not the global document
+      const root = widgetContext.root;
+
+      const tableHead = root.querySelector("#tableHead");
+      const tableBody = root.querySelector("#tableBody");
+
+      if (!tableHead || !tableBody) {
+        console.error("Table elements not found inside widget DOM");
+        return;
+      }
+
+      // Build headers
+      const headers = Object.keys(data[0]);
+      tableHead.innerHTML = `
         <tr>
-          ${headers.map(h => `<td>${row[h]}</td>`).join("")}
+          ${headers.map(h => `<th>${h}</th>`).join("")}
         </tr>
-      `)
-      .join("");
+      `;
 
-    $("#surveyDataTable").DataTable();
-  };
+      // Build rows
+      tableBody.innerHTML = data
+        .map(row => `
+          <tr>
+            ${headers.map(h => `<td>${row[h]}</td>`).join("")}
+          </tr>
+        `)
+        .join("");
+
+      // Initialize DataTables inside widget DOM
+      $(root.querySelector("#surveyDataTable")).DataTable();
+    };
+
+    // Load JSONP file AFTER defining callback
+    const script = document.createElement("script");
+    script.src = "https://connect.payscale.com/s/survey-part-data.js";
+    document.body.appendChild(script);
+
+  });
 </script>
-
-<!-- Load the JSONP file AFTER defining the callback -->
-<script src="https://connect.payscale.com/s/survey-part-data.js"></script>
