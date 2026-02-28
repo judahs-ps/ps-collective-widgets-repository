@@ -17,8 +17,7 @@
 </table>
 
 <script>
-  // Gainsight passes widgetContext into your script
-  insided.initWidget(async function (widgetContext) {
+  insided.widgets.onReady((widget) => {
 
     // JSONP callback
     window.loadSurveyPartData = function (data) {
@@ -27,8 +26,7 @@
         return;
       }
 
-      // Use the widget's DOM, not the global document
-      const root = widgetContext.root;
+      const root = widget.root;
 
       const tableHead = root.querySelector("#tableHead");
       const tableBody = root.querySelector("#tableBody");
@@ -59,10 +57,10 @@
       $(root.querySelector("#surveyDataTable")).DataTable();
     };
 
-    // Load JSONP file AFTER defining callback
+    // Load JSONP file INSIDE the widget DOM
     const script = document.createElement("script");
     script.src = "https://connect.payscale.com/s/survey-part-data.js";
-    document.body.appendChild(script);
+    widget.root.appendChild(script);
 
   });
 </script>
