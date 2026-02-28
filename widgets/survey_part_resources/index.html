@@ -2,34 +2,35 @@
 
 <table id="jsonTable" class="display"></table>
 
-<!-- jQuery (required by DataTables) -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<!-- DataTables JS -->
+<!-- DataTables JS (NO jQuery here) -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script>
-  // Example JSON dataset — replace with API call or widget config
-  const data = [
-    { id: 1, name: "Alice Johnson", role: "Admin", active: true },
-    { id: 2, name: "Bob Smith", role: "Moderator", active: false },
-    { id: 3, name: "Charlie Davis", role: "Member", active: true },
-    { id: 4, name: "Dana Lee", role: "Member", active: true }
-  ];
+  (function () {
+    // Use Gainsight's jQuery instance
+    var $ = window.jQuery;
 
-  // Convert JSON keys to DataTables column definitions
-  const columns = Object.keys(data[0]).map(key => ({
-    title: key.charAt(0).toUpperCase() + key.slice(1),
-    data: key
-  }));
+    // Example JSON dataset
+    const tableData = [
+      { id: 1, name: "Alice Johnson", role: "Admin", active: true },
+      { id: 2, name: "Bob Smith", role: "Moderator", active: false },
+      { id: 3, name: "Charlie Davis", role: "Member", active: true },
+      { id: 4, name: "Dana Lee", role: "Member", active: true }
+    ];
 
-  // Initialize DataTable
-  $(document).ready(function () {
-    $("#jsonTable").DataTable({
-      data,
-      columns,
-      pageLength: 5,
-      searching: true
+    // Build DataTables column definitions dynamically
+    const columns = Object.keys(tableData[0]).map(key => ({
+      title: key.charAt(0).toUpperCase() + key.slice(1),
+      data: key
+    }));
+
+    $(document).ready(function () {
+      $("#jsonTable").DataTable({
+        data: tableData,
+        columns: columns,
+        pageLength: 5,
+        searching: true
+      });
     });
-  });
+  })();
 </script>
