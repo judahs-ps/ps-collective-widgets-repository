@@ -17,34 +17,32 @@
 </table>
 
 <script>
-  // Load JSON and initialize DataTable
-  fetch("https://connect.payscale.com/s/survey-part-table.json")
-    .then(response => response.json())
-    .then(data => {
-      if (!data.length) return;
+  import surveyPartData from "https://connect.payscale.com/s/survey-part-data.js";
 
-      // Build table headers dynamically
-      const headers = Object.keys(data[0]);
-      const thead = document.getElementById("tableHead");
-      thead.innerHTML = `
-          <tr>
-            ${headers.map(h => `<th>${h}</th>`).join("")}
-          </tr>
-        `;
+  const data = surveyPartData;
+  if (!data.length) return;
 
-      // Build table rows
-      const tbody = document.getElementById("tableBody");
-      tbody.innerHTML = data
-        .map(row => {
-          return `
-              <tr>
-                ${headers.map(h => `<td>${row[h]}</td>`).join("")}
-              </tr>
-            `;
-        })
-        .join("");
+  // Build table headers dynamically
+  const headers = Object.keys(data[0]);
+  const thead = document.getElementById("tableHead");
+  thead.innerHTML = `
+    <tr>
+      ${headers.map(h => `<th>${h}</th>`).join("")}
+    </tr>
+  `;
 
-      // Initialize DataTables
-      $("#surveyDataTable").DataTable();
-    });
+  // Build table rows
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = data
+    .map(row => {
+      return `
+        <tr>
+          ${headers.map(h => `<td>${row[h]}</td>`).join("")}
+        </tr>
+      `;
+    })
+    .join("");
+
+  // Initialize DataTables
+  $("#surveyDataTable").DataTable();
 </script>
