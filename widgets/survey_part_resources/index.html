@@ -6,30 +6,43 @@
 
 <script>
   (function () {
-    // Use Gainsight's jQuery instance
-    var $ = window.jQuery;
+    // Wait until Gainsight's jQuery is available
+    function waitForjQuery(callback) {
+      if (window.jQuery && typeof window.jQuery === "function") {
+        callback(window.jQuery);
+      } else {
+        setTimeout(() => waitForjQuery(callback), 50);
+      }
+    }
 
-    // Example JSON dataset
-    const tableData = [
-      { id: 1, name: "Alice Johnson", role: "Admin", active: true },
-      { id: 2, name: "Bob Smith", role: "Moderator", active: false },
-      { id: 3, name: "Charlie Davis", role: "Member", active: true },
-      { id: 4, name: "Dana Lee", role: "Member", active: true }
-    ];
+    waitForjQuery(function ($) {
+      // Now jQuery is guaranteed to exist
 
-    // Build DataTables column definitions dynamically
-    const columns = Object.keys(tableData[0]).map(key => ({
-      title: key.charAt(0).toUpperCase() + key.slice(1),
-      data: key
-    }));
+      // Load DataTables AFTER jQuery is ready
+      $.getScript("https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js")
+        .done(function () {
+          const tableData = [
+            { id: 1, name: "Alice Johnson", role: "Admin", active: true },
+            { id: 2, name: "Bob Smith", role: "Moderator", active: false },
+            { id: 3, name: "Charlie Davis", role: "Member", active: true },
+            { id: 4, name: "Dana Lee", role: "Member", active: true }
+          ];
 
-    $(document).ready(function () {
-      $("#jsonTable").DataTable({
-        data: tableData,
-        columns: columns,
-        pageLength: 5,
-        searching: true
-      });
+          const columns = Object.keys(tableData[0]).map(key => ({
+            title: key.charAt(0).toUpperCase() + key.slice(1),
+            data: key
+          }));
+
+          $("#jsonTable").DataTable({
+            data: tableData,
+            columns: columns,
+            pageLength: 5,
+            searching: true
+          });
+        })
+        .fail(function () {
+          console.error("Failed to load DataTables");
+        });
     });
   })();
-</script>
+</script>  
